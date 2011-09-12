@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     }
   vector<string> inputfiles;
   for(int i = 1; i < argc-1; i++)
-    inputfiles.push_back(string(argv[i]]));
+    inputfiles.push_back(string(argv[i]));
   // open all referenced files
   vector<SF_INFO> infos;
   vector<SNDFILE*> sndfiles;
