@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sndfile.h>
 #include <vector>
+#include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include "BiQuadFilter.h"
 using namespace std;
