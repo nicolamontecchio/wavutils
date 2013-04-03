@@ -14,10 +14,10 @@ void convert(char *in, char*out)
   SF_INFO sfinfo;
   sndfile = sf_open(in, SFM_READ, &sfinfo);
   if (sndfile == 0)
-    {
-      cerr << "could not open audio file " << in << endl;
-      return;
-    }
+  {
+    cerr << "could not open audio file " << in << endl;
+    return;
+  }
   cout << "input" << endl;
   cout << " frames: " << sfinfo.frames << endl;
   cout << " samplerate: " << sfinfo.samplerate << endl;
@@ -28,12 +28,12 @@ void convert(char *in, char*out)
   // mixdown
   float *audioOut = new float[sfinfo.frames];
   for(int i = 0; i < sfinfo.frames; i++)
-    {
-      audioOut[i] = 0;
-      for(int j = 0; j < sfinfo.channels; j++)
-        audioOut[i] += audioIn[i*sfinfo.channels + j];
-      audioOut[i] /= sfinfo.channels;
-    }
+  {
+    audioOut[i] = 0;
+    for(int j = 0; j < sfinfo.channels; j++)
+      audioOut[i] += audioIn[i*sfinfo.channels + j];
+    audioOut[i] /= sfinfo.channels;
+  }
   sf_close(sndfile);
   // write output
   int frames = sfinfo.frames;    
@@ -60,11 +60,11 @@ void convert(char *in, char*out)
 int main(int argc, char** argv)
 {
   if (argc != 3)
-    {
-      cout << "usage: " << argv[0] << " input.wav output.wav" << endl;
-      exit(1);
-      return 1;
-    }
+  {
+    cout << "usage: " << argv[0] << " input.wav output.wav" << endl;
+    exit(1);
+    return 1;
+  }
   convert(argv[1],argv[2]);
   return 0;
 }

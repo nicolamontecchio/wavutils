@@ -2,8 +2,6 @@
     wavcut inputfile.wav outputfile.wav from to
     with from and to values in seconds */
 
-// TODO yet to check behaviour with STEREO FILES! ---------------------
-
 #include <iostream>
 #include <sndfile.h>
 using namespace std;
@@ -24,9 +22,9 @@ void cut(char *in, char*out, float from, float to)
   // cout << " samplerate: " << sfinfo.samplerate << endl;
   // cout << " channels: " << sfinfo.channels << endl;
   // cout << " format: " << hex << sfinfo.format << dec << endl;
-  
-  const int BUFFERSIZE = sfinfoIn.channels * 1024*16;
-  int nSamples = (to-from) * sfinfoIn.samplerate;
+
+  const int BUFFERSIZE = sfinfoIn.channels * 1024*8;
+  int nSamples = (to-from) * sfinfoIn.samplerate * sfinfoIn.channels;
 
   SF_INFO sfinfoOut = sfinfoIn;
   SNDFILE*   sndfileOut = sf_open(out, SFM_WRITE, &sfinfoOut);
@@ -38,6 +36,9 @@ void cut(char *in, char*out, float from, float to)
       sf_read_float(sndfileIn, buffer, BUFFERSIZE);
       sf_write_float(sndfileOut, buffer, BUFFERSIZE);
     }
+  int n_remaining = nSamples % BUFFERSIZE;
+  sf_read_float(sndfileIn, buffer, n_remaining);
+  sf_write_float(sndfileOut, buffer, n_remaining);
 
   sf_close(sndfileIn);
   sf_close(sndfileOut);
